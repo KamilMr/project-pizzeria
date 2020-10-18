@@ -1,5 +1,6 @@
 /* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
 
+
 {
   'use strict';
 
@@ -52,7 +53,58 @@
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   };
 
+  class Product {
+    constructor(id, data){
+      const thisProduct = this;
+      thisProduct.id = id;
+      thisProduct.data = data;
+      thisProduct.renderInMenu();
+      thisProduct.initAccordion();
+    }
+
+    renderInMenu(){
+      const thisProduct = this;
+      /* generate HTML based on template */
+      const generateHTML = templates.menuProduct(thisProduct.data);
+      /* create element using utilis.createElementFromHTML */
+      thisProduct.element = utils.createDOMFromHTML(generateHTML);
+      /* find menu container */
+      const menuContainer = document.querySelector(select.containerOf.menu);
+      /* add element to menu */
+      menuContainer.appendChild(thisProduct.element);
+    }
+    initAccordion(){
+      const thisProduct = this;
+      const clicableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable); /* find the clickable trigger (the element that should react to clicking) */
+      clicableTrigger.addEventListener('click', function(event){ /* START: click event listener to trigger */
+        event.preventDefault;/* prevent default action for event */
+        thisProduct.element.classList.toggle('active');  /* toggle active class on element of thisProduct */
+        const activeProducts = document.querySelectorAll('article.active');   /* find all active products */
+
+        for (let activeProduct of activeProducts) {/* START LOOP: for each active product */
+          if(activeProduct !== thisProduct.element) {/* START: if the active product isn't the element of thisProduct */
+            activeProduct.classList.remove('active');  /* remove class active for the active product */
+          }/* END: if the active product isn't the element of thisProduct */
+        }/* END LOOP: for each active product */
+      }); /* END: click event listener to trigger */
+    }
+  }
+
   const app = {
+    initMenu: function() {
+      const thisApp = this;
+
+      console.log('thisApp:', thisApp.data);
+      for (let productData in thisApp.data.products){
+        new Product(productData, thisApp.data.products[productData]);
+      }
+    },
+
+    initData: function() {
+      const thisApp = this;
+
+      thisApp.data = dataSource;
+    },
     init: function(){
       const thisApp = this;
       console.log('*** App starting ***');
@@ -60,6 +112,9 @@
       console.log('classNames:', classNames);
       console.log('settings:', settings);
       console.log('templates:', templates);
+
+      thisApp.initData();
+      thisApp.initMenu();
     },
   };
 
