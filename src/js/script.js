@@ -85,6 +85,7 @@
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
     initAccordion(){
@@ -128,22 +129,31 @@
       /* Start loop for all elements in params */
       for (let paramId in thisProduct.data.params){
         const param = thisProduct.data.params[paramId];
-
         /* Start loop for all options inside of params */
         for (let optionId in param.options){
           const option = param.options[optionId];
           const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
-
           if(optionSelected && !option.default){
             price += option.price;
-          } if(!optionSelected && option.default){
+          }else if(!optionSelected && option.default){
             price -= option.price;
           } /* End loop for all options inside of params */
+          /* create selector which is going to be used to select images conneted to selected optins*/
+          const imgSelector = '.'+ paramId +'-'+ optionId;
+          /* create const where I put in all searched elements */
+          const selectedImages = thisProduct.imageWrapper.querySelector(imgSelector);
+          /* if selected images are not-equal-to null than see if option is selected. If yes add class else remove. */
+          if(selectedImages != null){
+            if(optionSelected){
+              selectedImages.classList.add(classNames.menuProduct.wrapperActive);
+            }else {
+              selectedImages.classList.remove(classNames.menuProduct.wrapperActive);
+            }
+          }
         } /* END loop for all elements in params */
       }
       thisProduct.priceElem.innerHTML = price;
     }
-
   }
 
   const app = {
