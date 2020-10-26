@@ -1,4 +1,4 @@
-/* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
+/* global Handlebars, utils, dataSource */ // eslint-disable-line
 
 
 {
@@ -205,7 +205,6 @@
 
       /* set the contents of thisProduct.priceElem to be the value of variable price */
       thisProduct.priceElem.innerHTML = thisProduct.price;
-      console.log(thisProduct.params);
     }
 
     initAmountWidget(){
@@ -221,7 +220,7 @@
       thisProduct.name = thisProduct.data.name;
       thisProduct.amount = thisProduct.amountWidget.value;
       app.cart.add(thisProduct);
-      console.log('addtocart is cliced', thisProduct.name);
+      console.log('addtocart is cliced', thisProduct);
     }
   }
 
@@ -282,7 +281,6 @@
       thisCart.products = [];
       thisCart.getElements(element);
       thisCart.initActions();
-      console.log('thisCart: ', thisCart);
     }
 
     getElements(element){
@@ -290,8 +288,8 @@
       thisCart.dom = {};
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
-      thisCart.dom.productList = thisCart.dom.wrapper.productList.querySelector(select.cart.productList);
-      console.log((thisCart.dom.toggleTrigger));
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
+      console.log(thisCart.dom.productList);
     }
 
     initActions(){
@@ -304,13 +302,11 @@
     add(menuProduct){
       const thisCart = this;
       // /* generate HTML based on template */
-      console.log(thisCart);
-      const generateHTML = templates.menuProduct(thisCart);
+      const generateHTML = templates.cartProduct(menuProduct);
       // /* create element using utilis.createElementFromHTML */
       const generatedDOM = utils.createDOMFromHTML(generateHTML);
       // /* add element to menu */
-      thisCart.dom.productList(generatedDOM);
-      console.log('adding product', menuProduct);
+      thisCart.dom.productList.appendChild(generatedDOM);
     }
   }
 
