@@ -1,6 +1,7 @@
 import {settings, select, classNames, templates} from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
+import Booking from './components/Booking.js';
 
 
 const app = {
@@ -89,6 +90,15 @@ const app = {
       });
   },
 
+  initBooking: function(){
+    const thisApp = this;
+    /* save in variable container for booking in select.containerOf.booking */
+    const bookingElem = document.querySelector(select.containerOf.booking);
+    console.log('bookingElem is: ', bookingElem);
+    /* creat new class Booking (bookingElem) */
+    thisApp.booking = new Booking(bookingElem);
+  },
+
   init: function(){
     const thisApp = this;
     console.log('*** App starting ***');
@@ -100,6 +110,7 @@ const app = {
     thisApp.initPages();
     thisApp.initData();
     thisApp.initCart();
+    thisApp.initBooking();
   },
 };
 
