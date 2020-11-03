@@ -31,6 +31,7 @@ class Booking {
 
     thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
     thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
+    console.log(thisBooking.dom.hourPicker);
   }
 }
 
