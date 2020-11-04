@@ -18,6 +18,7 @@ class Cart{
     thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
     thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
     thisCart.renderTotalsKeys = ['totalNumber', 'totalPrice', 'subtotalPrice', 'deliveryFee'];
+    thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(select.cart.deliveryFee);
     for(let key of thisCart.renderTotalsKeys){
       thisCart.dom[key] = thisCart.dom.wrapper.querySelectorAll(select.cart[key]);
     }
@@ -39,6 +40,7 @@ class Cart{
 
     thisCart.dom.productList.addEventListener('remove', function(event){
       thisCart.remove(event.detail.cartProduct);
+
     });
 
     thisCart.dom.form.addEventListener('submit', function(event){

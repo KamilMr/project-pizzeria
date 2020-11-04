@@ -8,9 +8,9 @@ class HourPicker extends BaseWidget{
   constructor(wrapper){
     super(wrapper, settings.hours.open);
     const thisWidget = this;
-    console.log(thisWidget);
     thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.hourPicker.input);
     thisWidget.dom.output = thisWidget.dom.wrapper.querySelector(select.widgets.hourPicker.output);
+    thisWidget.value = thisWidget.dom.input.value;
     thisWidget.initPlugin();
   }
 
@@ -29,12 +29,14 @@ class HourPicker extends BaseWidget{
   }
 
   isValid(value){
-    return value == this.value;
+    return value == value;
   }
 
   renderValue(){
     const thisWidget = this;
     thisWidget.dom.output.innerHTML = thisWidget.timeValue;
+
+
   }
 }
 
