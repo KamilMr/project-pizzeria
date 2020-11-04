@@ -61,6 +61,7 @@ class Booking {
           eventsRepeatResponses.json(),
         ]);
       }).then(function([bookings, eventsCurrent, eventsRepeat]){ //potraktuj pierwszy element jako tablice  i zapisz go w zmiennej bookings.
+        // console.log(urls);
         // console.log(bookings);
         // console.log(eventsCurrent);
         // console.log(eventsRepeat);
@@ -90,13 +91,12 @@ class Booking {
         }
       }
     }
-
-    // console.log('thisBooking.booked',thisBooking.booked);
     thisBooking.updateDOM();
   }
 
   makeBoked(date, hour, duration, table){
     const thisBooking = this;
+    console.log('********', date, hour, duration, table);
 
     if(typeof thisBooking.booked[date] == 'undefined'){
       thisBooking.booked[date] = {};
@@ -117,26 +117,30 @@ class Booking {
 
   updateDOM(){
     const thisBooking = this;
-
     thisBooking.date = thisBooking.datePicker.value;
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
+    console.log('update dom.. poczatek',thisBooking.datePicker.value);
     let allAvailable = false;
-
-    if(typeof thisBooking.booked[thisBooking.date] == 'undefined' || typeof thisBooking.booked[thisBooking.date][thisBooking.hour] == 'undefined'){
+    if(typeof thisBooking.booked[thisBooking.date] == 'undefined'
+    ||
+    typeof thisBooking.booked[thisBooking.date][thisBooking.hour] == 'undefined'
+    ){
       allAvailable = true;
     }
-
     for(let table of thisBooking.dom.tables){
+      console.log(thisBooking.dom.tables);
       let tableId = table.getAttribute(settings.booking.tableIdAttribute);
       if(!isNaN(tableId)){
         tableId = parseInt(tableId);
       }
-      if(!allAvailable && thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId) > -1){
+      if(!allAvailable && thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)){
         table.classList.add(classNames.booking.tableBooked);
       } else {
         table.classList.remove(classNames.booking.tableBooked);
+        // console.log('class remove is active', thisBooking.booked[thisBooking.date][thisBooking.hour]);
       }
     }
+
   }
 
   render(bookingElem){
@@ -150,8 +154,7 @@ class Booking {
 
     thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
-    thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.widgets.tables);
-
+    thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
   }
 
   initWidget(){
@@ -165,6 +168,13 @@ class Booking {
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
     });
+  }
+
+  reserveTable(){
+    /* choose one of the table */
+    /* when date change remove table booking */
+    /* send reservation to API */
+    /* unable booking product in the same time */
   }
 }
 

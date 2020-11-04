@@ -20,12 +20,17 @@ class DatePicker extends BaseWidget {
     thisWidget.maxDate = new Date(utils.addDays(thisWidget.minDate, settings.datePicker.maxDaysInFuture));
     /* start plugin */
 
-    const flatPickrOptions = {
+
+
+    flatpickr(thisWidget.dom.input, {
       enableTime: true,
+      minTime: '12:00',
+      maxTime: '23:59',
       dateFormat: 'd-m-Y H:i',
       minDate: thisWidget.minDate,
       defaultDate: thisWidget.minDate,
       maxDate: thisWidget.maxDate,
+      time_24hr: true,
       locale: {
         'firstDayOfWeek': 1 // start week on Monday
       },
@@ -38,10 +43,8 @@ class DatePicker extends BaseWidget {
       ],
       onChange: function(selectedDates, dateStr){
         thisWidget.value = dateStr;
-      }
-    };
-
-    flatpickr(thisWidget.dom.input, flatPickrOptions);
+      },
+    });
 
 
   }
@@ -52,6 +55,10 @@ class DatePicker extends BaseWidget {
 
   isValid(){
     return true;
+  }
+
+  renderValue(){
+    //an empty method to disable method in BaseWidget
   }
 
 }
