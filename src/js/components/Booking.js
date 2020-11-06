@@ -10,6 +10,7 @@ class Booking {
     thisBooking.render(bookingElem);
     thisBooking.initWidget();
     thisBooking.getData();
+    thisBooking.reserveTable();
   }
 
   getData(){
@@ -96,7 +97,7 @@ class Booking {
 
   makeBoked(date, hour, duration, table){
     const thisBooking = this;
-    console.log('********', date, hour, duration, table);
+    // console.log('********', date, hour, duration, table);
 
     if(typeof thisBooking.booked[date] == 'undefined'){
       thisBooking.booked[date] = {};
@@ -119,16 +120,16 @@ class Booking {
     const thisBooking = this;
     thisBooking.date = thisBooking.datePicker.value;
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
-    console.log('update dom.. poczatek',thisBooking.datePicker.value);
+    thisBooking.reserveTable();//for a time
     let allAvailable = false;
     if(typeof thisBooking.booked[thisBooking.date] == 'undefined'
     ||
     typeof thisBooking.booked[thisBooking.date][thisBooking.hour] == 'undefined'
     ){
       allAvailable = true;
+
     }
     for(let table of thisBooking.dom.tables){
-      console.log(thisBooking.dom.tables);
       let tableId = table.getAttribute(settings.booking.tableIdAttribute);
       if(!isNaN(tableId)){
         tableId = parseInt(tableId);
@@ -137,10 +138,42 @@ class Booking {
         table.classList.add(classNames.booking.tableBooked);
       } else {
         table.classList.remove(classNames.booking.tableBooked);
-        // console.log('class remove is active', thisBooking.booked[thisBooking.date][thisBooking.hour]);
       }
     }
+  }
 
+  reserveTable(){
+    const thisBooking = this;
+    /* choose tables */
+    const payload = {
+      date: thisBooking.datePicker.value,
+      hour: thisBooking.hourPicker.value,
+      table: '',
+      repeat: '',
+      duration: '',
+      pp: '',
+      starter: []
+    };
+    console.log(payload);
+
+    for(let table of thisBooking.dom.tables){
+      table.addEventListener('click', function(){
+        if(table.classList.contains('booked')){
+          console.log('Nie mozna zarezerwowac');
+
+        } else{
+          console.log('wysylanie na serwer', thisBooking.dom.tables);
+
+        }
+
+      });
+    }
+
+    /* ad event listener to all of them  */
+    /* send reservation to API */
+
+    /* unable booking product in the same time */
+    // thisBooking.updateDOM();
   }
 
   render(bookingElem){
@@ -164,18 +197,12 @@ class Booking {
 
     thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
     thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
-
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
     });
   }
 
-  reserveTable(){
-    /* choose one of the table */
-    /* when date change remove table booking */
-    /* send reservation to API */
-    /* unable booking product in the same time */
-  }
+
 }
 
 export default Booking;

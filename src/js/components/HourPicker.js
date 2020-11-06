@@ -36,7 +36,6 @@ class HourPicker extends BaseWidget{
     const thisWidget = this;
     thisWidget.dom.output.innerHTML = thisWidget.timeValue;
 
-
   }
 }
 

@@ -18,15 +18,13 @@ class DatePicker extends BaseWidget {
     const thisWidget = this;
     thisWidget.minDate = new Date(thisWidget.value);
     thisWidget.maxDate = new Date(utils.addDays(thisWidget.minDate, settings.datePicker.maxDaysInFuture));
+
     /* start plugin */
-
-
-
     flatpickr(thisWidget.dom.input, {
-      enableTime: true,
+      enableTime: false,
       minTime: '12:00',
       maxTime: '23:59',
-      dateFormat: 'd-m-Y H:i',
+      dateFormat: 'Y-m-d',
       minDate: thisWidget.minDate,
       defaultDate: thisWidget.minDate,
       maxDate: thisWidget.maxDate,
