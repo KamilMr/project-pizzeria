@@ -56,7 +56,7 @@ class DatePicker extends BaseWidget {
   }
 
   renderValue(){
-    //an empty method to disable method in BaseWidget
+
   }
 
 }

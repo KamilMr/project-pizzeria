@@ -254,6 +254,18 @@
       "ppl": 3,
       "starters": ["lemonWater"]
     }
+
   ],
-  "booking": []
+  "booking": [
+    {
+      "id": 5,
+      "date": "2020-11-20",
+      "hour": "17:30",
+      "table": 2,
+      "repeat": false,
+      "duration": 2,
+      "ppl": 3,
+      "starters": ["lemonWater"]
+    }
+  ]
 }
