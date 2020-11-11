@@ -10,7 +10,7 @@ class Booking {
     thisBooking.render(bookingElem);
     thisBooking.initWidget();
     thisBooking.getData();
-    thisBooking.reserveTable();
+    thisBooking.pickTableForBooking();
   }
 
   getData(){
@@ -105,8 +105,6 @@ class Booking {
 
     const startHour = utils.hourToNumber(hour);
 
-
-
     for(let hourBlock = startHour; hourBlock < startHour + duration; hourBlock+= 0.5){
       if(typeof thisBooking.booked[date][hourBlock] == 'undefined'){
         thisBooking.booked[date][hourBlock] = [];
@@ -141,29 +139,66 @@ class Booking {
     }
   }
 
-
-  reserveTable(){
+  /* Homework 11.2 */
+  /* Here in pickTableForBooking() goes through all table exploring if the table can be booked.
+  This code thas not send reservetion to the server as wel as is not saving them in thisBooking.booked. */
+  pickTableForBooking(){
     const thisBooking = this;
+    /* In every table */
     for(let table of thisBooking.dom.tables){
       table.addEventListener('click', function(){
-        if(!table.classList.contains('booked')){
+        const beginingBooking = thisBooking.hour;
+        const durationBooking = thisBooking.hoursAmount.value;
+        /* array is collecting tables with the class "booked" --> time range is duration.  */
+        let cannotBeBooked = [];
+        /* extract number out of the chosen table */
+        let tableId = table.getAttribute(settings.booking.tableIdAttribute);
+
+        /* this starts at chosen time and date and goeas one hour or more depends how many hours is selected by user. Next if at given time, loop finds booked tables it will send them to cannotBeBooked array. */
+        for(let i = beginingBooking; i < beginingBooking + durationBooking; i+= .5){
+          if(thisBooking.booked[thisBooking.date][i].includes(tableId)){
+            cannotBeBooked.push(tableId);
+          }
+        }
+        /* if cannotBeBooked does not include selected tables that means it can be booked by user */
+        if(!cannotBeBooked.includes(tableId)){
           table.classList.toggle(classNames.booking.reserving);
         }
       });
     }
+    thisBooking.removeClassReserving();
+  }
+
+  /* This function if date and hours is changed will delete class 'reserving' */
+  removeClassReserving(){
+    const thisBooking = this;
+    thisBooking.hour = document.querySelector(select.widgets.hourPicker.input);
+    thisBooking.hour.addEventListener('change', function(){
+      for(let table of thisBooking.dom.tables){
+        table.classList.remove(classNames.booking.reserving);
+      }
+    });
+
+    thisBooking.dom.datePicker.addEventListener('change', function(){
+      for(let table of thisBooking.dom.tables){
+        table.classList.remove(classNames.booking.reserving);
+      }
+    });
 
   }
 
+  /* This function is booking the tables by sending them to app.json and by updating theBooking.booked later in fetch. */
   sendReservation(){
     const thisBooking = this;
     const url = settings.db.url +'/'+ settings.db.booking;
 
+    /* I am creating variable integer to extract number(if given value is not a number) and put them later on in payload. Not sure if necessary but it works ok with it.  */
     let integer = '';
     for(let table of thisBooking.dom.tables){
       if(table.classList.contains('reserving')){
         let tableId = table.getAttribute(settings.booking.tableIdAttribute);
         integer = parseInt(tableId, 10);
-
+        table.classList.remove(classNames.booking.reserving);
       }
     }
     const payload = {
@@ -187,10 +222,10 @@ class Booking {
     fetch(url, options)
       .then(response => response.json())
       .then(parsedResponce => {
-        console.log(parsedResponce);
+        thisBooking.makeBoked(parsedResponce.date, parsedResponce.hour, parsedResponce.duration, parsedResponce.table);
+        thisBooking.updateDOM();
       });
 
-    thisBooking.updateDOM();
   }
 
   render(bookingElem){
@@ -218,7 +253,8 @@ class Booking {
       thisBooking.updateDOM();
     });
     thisBooking.dom.order = thisBooking.dom.wrapper.querySelector(select.booking.orderConfirmation);
-    thisBooking.dom.order.addEventListener('click', function(){
+    thisBooking.dom.order.addEventListener('click', function(event){
+      event.preventDefault();
       thisBooking.sendReservation();
     });
   }

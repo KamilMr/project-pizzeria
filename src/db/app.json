@@ -259,11 +259,11 @@
   "booking": [
     {
       "id": 5,
-      "date": "2020-11-20",
-      "hour": "17:30",
-      "table": 2,
+      "date": "2020-11-11",
+      "hour": "12:00",
+      "table": "",
       "repeat": false,
-      "duration": 2,
+      "duration": 12,
       "ppl": 3,
       "starters": ["lemonWater"]
     }
