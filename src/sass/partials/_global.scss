@@ -51,55 +51,50 @@ body {
       }
     }
 
-    .item-1 {
+    .item-1, .item-2 {
       position: relative;
       display: inline-block;
+
+      .innerTextItem {
+        display: inline;
+        content: 'order online';
+        color: white;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-family: $font-header;
+        font-size: 19px;
+        font-weight: $font-semibold;
+        text-transform: uppercase;
+        position: absolute;
+        transition: all 1s;
+
+        .innerSubTextItem {
+          position: absolute;
+          display: inline;
+          font-size: 12px;
+          font-family: $font-header;
+          font-weight: $font-semibold;
+          width: 100%;
+          text-align: center;
+          color: white;
+          left: 50%;
+          top: 100%;
+          transform: translate(-50%, -50%);
+          opacity: 0%;
+          transition: all 1s;
+        }
+      }
     }
 
-    .item-1::before{
-      display: inline;
-      content: 'order online';
-      color: white;
+    .innerTextItem:hover {
       left: 50%;
-      top: 50%;
+      top: 30%;
       transform: translate(-50%, -50%);
-      font-family: $font-header;
-      font-size: 26px;
-      font-weight: $font-semibold;
-      text-transform: uppercase;
-      position: absolute;
-    }
 
-    .item-1:hover::before{
-      text-align: center;
-      content: 'Delicious food deliver to your door.';
-      font-size: 12px;
-    }
-
-
-    .item-2 {
-      position: relative;
-      display: inline-block;
-    }
-
-    .item-2:hover::before{
-      content: 'Booking is easy going.';
-      font-size: 12px;
-      text-align: center;
-    }
-
-    .item-2::before{
-      position: absolute;
-      display: inline;
-      content: 'book a table';
-      color: white;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      font-family: $font-header;
-      font-size: 26px;
-      font-weight: $font-semibold;
-      text-transform: uppercase;
+      .innerSubTextItem {
+        opacity: 100%;
+      }
     }
 
     .item-3 {
@@ -111,7 +106,7 @@ body {
       border-radius: 5px;
     }
 
-    .item-3::before{
+    .item-3::before {
       position: absolute;
       display: inline;
       content: 'opening hours:';
@@ -125,7 +120,7 @@ body {
       text-transform: uppercase;
     }
 
-    .item-3::after{
+    .item-3::after {
       position: absolute;
       display: inline;
       content: 'tue-sun: 12pm - 12am';

@@ -3,16 +3,16 @@
   showSlides();
 
   function showSlides() {
-    var a;
+    var i;
     var slides = document.getElementsByClassName('mySlides');
     var dots = document.getElementsByClassName('dot');
-    for (a = 0; a < slides.length; a++) {
-      slides[a].style.display = 'none';
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = 'none';
     }
     slideIndex++;
     if (slideIndex > slides.length) {slideIndex = 1;}
-    for (a = 0; a < dots.length; a++) {
-      dots[a].className = dots[a].className.replace(' active', '');
+    for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(' active', '');
     }
     slides[slideIndex-1].style.display = 'block';
     dots[slideIndex-1].className += ' active';
@@ -23,8 +23,8 @@
   const bookTable = document.getElementsByClassName('item-2');
   // eslint-disable-next-line no-unused-vars
   let windowOpen = '';
-  for (var a = 0 ; a < orderOnline.length; a++) {
-    orderOnline[a].addEventListener('click' , function (){
+  for (var i = 0 ; i < orderOnline.length; i++) {
+    orderOnline[i].addEventListener('click' , function (){
       windowOpen = window.open('/#/order');
     });
   }

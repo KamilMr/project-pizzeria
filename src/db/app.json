@@ -228,9 +228,9 @@
       "id": 3,
       "date": "2020-11-11",
       "hour": "12:00",
-      "table": 3,
+      "table": "",
       "repeat": "daily",
-      "duration": 2,
+      "duration": 12,
       "ppl": 3,
       "starters": ["bread", "lemonWater"]
     },

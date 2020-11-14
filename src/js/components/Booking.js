@@ -152,12 +152,13 @@ class Booking {
         /* array is collecting tables with the class "booked" --> time range is duration.  */
         let cannotBeBooked = [];
         /* extract number out of the chosen table */
-
-        /* this starts at chosen time and date and goes for one hour or more depends how many hours is selected by user. Next if at given time, loop finds booked tables it will send them to cannotBeBooked array. */
         let tableId = table.getAttribute(settings.booking.tableIdAttribute);
+        if(!isNaN(tableId)){
+          tableId = parseInt(tableId);
+        }
+        /* this starts at chosen time and date and goes for one hour or more depends how many hours is selected by user. Next if at given time, loop finds booked tables it will send them to cannotBeBooked array. */
         for(let i = beginingBooking; i < beginingBooking + durationBooking; i+= .5){
           if(thisBooking.booked[thisBooking.date][i].includes(tableId)){
-            console.log(tableId);
             cannotBeBooked.push(tableId);
           }
         }
