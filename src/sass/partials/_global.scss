@@ -58,16 +58,19 @@ body {
       .innerTextItem {
         display: inline;
         content: 'order online';
-        color: white;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+        transition: all 1s;
+        position: absolute;
+      }
+
+      a {
+        color: white;
         font-family: $font-header;
         font-size: 19px;
         font-weight: $font-semibold;
         text-transform: uppercase;
-        position: absolute;
-        transition: all 1s;
       }
     }
 
@@ -77,11 +80,11 @@ body {
       font-size: 12px;
       font-family: $font-header;
       font-weight: $font-semibold;
-      width: 100%;
+      width: 140px;
       text-align: center;
       color: white;
       left: 50%;
-      top: 100%;
+      top: 190%;
       transform: translate(-50%, -50%);
       opacity: 0%;
       transition: all 1s;

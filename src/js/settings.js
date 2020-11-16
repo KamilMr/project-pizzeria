@@ -10,6 +10,7 @@ export const select = {
     menu: '#product-list',
     cart: '#cart',
     pages: '#pages',
+    pagesTop:'#container-top',
     booking: '.booking-wrapper',
   },
   all: {
@@ -67,6 +68,10 @@ export const select = {
   },
   nav: {
     links: '.main-nav a',
+  },
+
+  containerTop: {
+    links: '.innerTextItem a',
   },
 };
 

@@ -9,10 +9,11 @@ const app = {
     const thisApp = this;
 
     thisApp.pages = document.querySelector(select.containerOf.pages).children; //wszystkie dzieci kontenera stron.
+    thisApp.pagesTop = document.querySelector(select.containerOf.pagesTop).children;
+
     thisApp.navLinks = document.querySelectorAll(select.nav.links);
 
     const idFromHash = window.location.hash.replace('#/', '');
-
     // let pageMatchingHash = false; //why false?
     let pageMatchingHash = thisApp.pages[0].id;
 
@@ -53,6 +54,29 @@ const app = {
       link.classList.toggle(classNames.nav.active, link.getAttribute('href') =='#' + pageId);
     }
 
+
+  },
+
+  openPage: function(){
+    const clickedElement = this;
+
+    const orderOnline = document.getElementsByClassName('item-1');
+    const bookTable = document.getElementsByClassName('item-2');
+    // eslint-disable-next-line no-unused-vars
+    let windowOpen = '';
+    for (var i = 0 ; i < orderOnline.length; i++) {
+      orderOnline[i].addEventListener('click' , function (){
+        windowOpen = 'order';
+        clickedElement.activatePage(windowOpen);
+
+      });
+    }
+    for (var j = 0 ; j < bookTable.length; j++) {
+      bookTable[j].addEventListener('click' , function (){
+        windowOpen = 'booking';
+        clickedElement.activatePage(windowOpen);
+      });
+    }
   },
 
   initMenu: function() {
@@ -110,7 +134,9 @@ const app = {
     thisApp.initData();
     thisApp.initCart();
     thisApp.initBooking();
+    thisApp.openPage();
   },
+
 };
 
 app.init();
