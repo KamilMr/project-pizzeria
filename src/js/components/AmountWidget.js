@@ -1,6 +1,6 @@
 import {settings, select} from '../settings.js';
 import BaseWidget from './BaseWidget.js';
-
+// import Booking from './Booking.js';
 
 class AmountWidget extends BaseWidget{
   constructor(element){
@@ -16,6 +16,7 @@ class AmountWidget extends BaseWidget{
     thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.amount.input);
     thisWidget.dom.linkDecrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkDecrease);
     thisWidget.dom.linkIncrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkIncrease);
+
   }
 
   isValid(value){

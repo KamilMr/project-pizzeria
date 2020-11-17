@@ -139,6 +139,7 @@ class Booking {
     }
   }
 
+
   /* Homework 11.2 */
   /* Here in pickTableForBooking() goes through all table exploring if the table can be booked.
   This code thas not send reservetion to the server as well as is not saving them in thisBooking.booked. */
@@ -161,6 +162,7 @@ class Booking {
           if(thisBooking.booked[thisBooking.date][i].includes(tableId)){
             cannotBeBooked.push(tableId);
           }
+          console.log(thisBooking.booked[thisBooking.date][i]);
         }
         /* if cannotBeBooked does not include selected tables that means it can be booked by user */
         if(!cannotBeBooked.includes(tableId)){
@@ -186,7 +188,6 @@ class Booking {
         table.classList.remove(classNames.booking.reserving);
       }
     });
-
   }
 
   /* This function is booking the tables by sending them to app.json and by updating theBooking.booked later in fetch. */
@@ -201,32 +202,32 @@ class Booking {
         let tableId = table.getAttribute(settings.booking.tableIdAttribute);
         integer = parseInt(tableId, 10);
         table.classList.remove(classNames.booking.reserving);
+        const payload = {
+          date: thisBooking.datePicker.value,
+          hour: thisBooking.hourPicker.value,
+          table: integer,
+          repeat: false,
+          duration: thisBooking.hoursAmount.value,
+          ppl: thisBooking.peopleAmount.value,
+          // phone: thisBooking.dom.phone.value,
+          // address: thisBooking.dom.address.value,
+        };
+        const options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        };
+
+        fetch(url, options)
+          .then(response => response.json())
+          .then(parsedResponce => {
+            thisBooking.makeBoked(parsedResponce.date, parsedResponce.hour, parsedResponce.duration, parsedResponce.table);
+            thisBooking.updateDOM();
+          });
       }
     }
-    const payload = {
-      date: thisBooking.datePicker.value,
-      hour: thisBooking.hourPicker.value,
-      table: integer,
-      repeat: false,
-      duration: thisBooking.hoursAmount.value,
-      ppl: thisBooking.peopleAmount.value,
-      // phone: thisBooking.dom.phone.value,
-      // address: thisBooking.dom.address.value,
-    };
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    };
-
-    fetch(url, options)
-      .then(response => response.json())
-      .then(parsedResponce => {
-        thisBooking.makeBoked(parsedResponce.date, parsedResponce.hour, parsedResponce.duration, parsedResponce.table);
-        thisBooking.updateDOM();
-      });
 
   }
 
